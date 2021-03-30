@@ -1,0 +1,395 @@
+{% extends "base.html"%} {% load static%}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{% block title %} Home {% endblock %}</title>
+
+    {% block style %} 
+    <style type="text/css">
+    #top{
+      background-image: url('{%static 'assets/images/top-left-bg.jpg' %}');
+      background-size: 100% 100%;
+    }
+    </style>
+     <link rel="stylesheet" href="{%static 'assets/css/style.css'%}" />
+    {% endblock %}
+  </head>
+
+  <body>
+    {% block content %}
+
+      <div class="h-75" style="border:px solid yellow ; position:relative;">
+        <div class="container-fluid">
+          <div class="row" style="  height:100%; border:px solid black">
+            <div class="col-lg-4 d-flex align-items-center justify-content-center" id="top">
+              <div class="" style="border:px solid black">
+                <div class="text-center inner-content " >
+                 
+                  <h4 class="text-light">THE BEST Crowd-Funding</h4>
+                  <div >
+                    <a class=" colorWhite w3-hover-red btn btnChanged rounded-2 bg-dark " style="color:#fb6355"  href="#reservation">Start</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-8" >
+              {% comment %}
+              <div class="main-banner header-text">
+                <div class="Modern-Slider">
+                  <!-- Item -->
+                  <div class="item">
+                    <div class="img-fill">
+                      <img
+                        src="{%static 'assets/images/slide-01.jpg' %}"
+                        alt=""
+                      />
+                    </div>
+                  </div>
+                  <!-- // Item -->
+                  <!-- Item -->
+                  <div class="item">
+                    <div class="img-fill">
+                      <img
+                        src="{%static 'assets/images/slid.jpg'%}"
+                        style="width: auto; height: auto"
+                      />
+                    </div>
+                  </div>
+                  <!-- // Item -->
+                  <!-- Item -->
+                  <div class="item">
+                    <div class="img-fill">
+                      <img
+                        src="{%static 'assets/images/slid2.jpg'%}"
+                        style="max-width: 100%; max-height: 100%"
+                      />
+                    </div>
+                  </div>
+                  <!-- // Item -->
+                </div>
+              </div>
+              {% endcomment %}
+
+              <div
+                id="carouselExampleControls"
+                class="carousel slide "
+                data-bs-ride="carousel"
+                style="border:px solid red ; height:100%;"
+              >
+                <div class="carousel-inner"  style=" height:100%;" >
+                  <div class="carousel-item active"  >
+                    <img src="{%static 'assets/images/slide-01.jpg' %}" class="img-fluid h-100" alt="Responsive image" />
+                  </div>
+                  <div class="carousel-item">
+                    <img
+                      src="{%static 'assets/images/slid4.jpg'%}"
+                      class="img-fluid" alt="Responsive image"
+                    />
+                  </div>
+                  <div class="carousel-item ">
+                    <img
+                      src="{%static 'assets/images/slid2.jpg'%}"
+                      class="img-fluid" alt="Responsive image"
+                    />
+                  </div>
+                </div>
+                <button
+                  class="carousel-control-prev"
+                  type="button"
+                  data-bs-target="#carouselExampleControls"
+                  data-bs-slide="prev"
+                >
+                  <span
+                    class="carousel-control-prev-icon"
+                    aria-hidden="true"
+                  ></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button
+                  class="carousel-control-next"
+                  type="button"
+                  data-bs-target="#carouselExampleControls"
+                  data-bs-slide="next"
+                >
+                  <span
+                    class="carousel-control-next-icon"
+                    aria-hidden="true"
+                  ></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+              </div>
+
+              {% comment %} // {% endcomment %}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row m-5">
+        <div class="col-12 text-center" id="Featured">
+          <h2 class="h2">Featured Project</h2>
+          <span class="border pl-5 pr-5" style="background-color: #fb6355"></span>
+        </div>
+      </div>
+      <div class="row m-5">
+        <div class="col-12">
+          <div class="row">
+            {% comment %} first card {% endcomment %} {% for item in Featured %}
+
+            <div class="col-2 m-auto" onclick="detail({{item.id}})">
+              <div class="card border-0 backHover" style="width: 100% ; height:100%">
+                <img
+                  src="/media/{{item.img}}"
+                  class="card-img-top " width="200" height="200"
+                />
+                {% comment %}
+                <div class="card-body">
+                  <p
+                    class="card-text text-capitalize text-center h2"
+                    style="color: #fb6355"
+                  >
+                    {{item.title}}
+                  </p>
+
+                  <p class="card-text text-center">{{item.details}}</p>
+                </div>
+                {% endcomment %}
+
+                  <div
+                    class="card-deck p-0 m-0  border-0"
+                    style="height: 10px;width:100%;  background-color: #fb63552c"
+                  >
+                    <div
+                      class="presentageProgress progress-bar"
+                      role="progressbar"
+                      style="width: 50%; background-color: #fb6355"
+                      style="background: #fb6355"
+                      aria-valuenow="25"
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                    ></div>
+                  </div>
+
+
+                <div class="card-body backFooter border-0 bg-dark">
+                  <div class="row">
+                    <div class="col-4 text-center border-right border-light">
+                      <p class="font-weight-bold text-light">Current</p>
+                      <p class="text-light">{{item.actualDonation}} EGP</p>
+                    </div>
+
+                    <p
+                      class="actual col-4 h4 text-center align-middle font-weight-bold text-light"
+                      style="font: 20px"
+                    ></p>
+
+                    <div class="col-4 text-center border-left border-light">
+                      <p class="font-weight-bold text-light">Target</p>
+                      <p class="text-light">{{item.totalTarget}} EGP</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <script>
+              x={{ forloop.counter0 }}
+              console.log(typeof(x))
+              total={{item.totalTarget}}
+              actual={{item.actualDonation}}
+              presentage=(actual/total)*100;
+              document.getElementsByClassName("actual")[x].innerText=Math.round(presentage)+"%"
+              document.getElementsByClassName("presentageProgress")[x].style.width=presentage+"%"
+
+              function detail(ele)
+              {
+                window.location.href="../home/project/"+ele+"";
+              }
+            </script>
+            {% endfor %} {% comment %} ---- {% endcomment %}
+          </div>
+        </div>
+      </div>
+      <div class="row m-5">
+        <div class="col-12 text-center" id="Recommended">
+          <h2 class="h2">Recommended Project</h2>
+          <span class="border pl-5 pr-5" style="background-color: #fb6355"></span>
+        </div>
+      </div>
+      <div class="row m-5">
+        <div class="col-12">
+          <div class="row">
+            {% comment %} first card {% endcomment %} {% for item in maxRate %}
+
+            <div class="col-2 m-auto h-25" onclick="detail({{item.id}})">
+              <div class="card border-0 backHover" style="width: 100% ; height:100%">
+                <img
+                   src="/media/{{item.img}}"
+                  class="card-img-top " width="200" height="200"
+                />
+                {% comment %}
+                <div class="card-body">
+                  <p
+                    class="card-text text-capitalize text-center h2"
+                    style="color: #fb6355"
+                  >
+                    {{item.title}}
+                  </p>
+
+                  <p class="card-text text-center">{{item.details}}</p>
+                </div>
+                {% endcomment %}
+
+                <div
+                  class="card-deck p-0 m-0 border-0"
+                  style="height: 10px; background-color: #fb63552c"
+                >
+                  <div
+                    class="presentageProgress_rec progress-bar"
+                    role="progressbar"
+                    style="width: 50%; background-color: #fb6355"
+                    style="background: #fb6355"
+                    aria-valuenow="25"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                  ></div>
+                </div>
+
+                <div class="card-body border-0 bg-dark">
+                  <div class="row">
+                    <div class="col-4 text-center border-right border-light">
+                      <p class="font-weight-bold text-light">Current</p>
+                      <p class="text-light">{{item.actualDonation}} EGP</p>
+                    </div>
+
+                    <p
+                      class="actual_rec col-4 h2 text-center align-middle font-weight-bold text-light"
+                      style="font: 20px"
+                    ></p>
+
+                    <div class="col-4 text-center border-left border-light">
+                      <p class="font-weight-bold text-light">Target</p>
+                      <p class="text-light">{{item.totalTarget}} EGP</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <script>
+              x={{ forloop.counter0 }}
+              console.log(typeof(x))
+              total={{item.totalTarget}}
+              actual={{item.actualDonation}}
+              presentage=(actual/total)*100;
+              document.getElementsByClassName("actual_rec")[x].innerText=Math.round(presentage)+"%"
+              document.getElementsByClassName("presentageProgress_rec")[x].style.width=presentage+"%"
+
+              function detail(ele)
+              {
+                window.location.href="../home/project/"+ele+"";
+              }
+            </script>
+            {% endfor %} {% comment %} ---- {% endcomment %}
+          </div>
+        </div>
+      </div>
+
+      <div class="headImg">
+        <img src="{%static 'assets/images/dd.jpg' %}" class="backImg" />
+        <p class="textright text-light">
+          We hope that we can build a mature society
+        </p>
+        {% comment %}
+        <h2 class="h2">Last Project</h2>
+        <span class="border pl-5 pr-5" style="background-color: #fb6355"></span>
+        {% endcomment %}
+      </div>
+
+      <div class="row m-5">
+        <div class="col-12 text-center" id="Last">
+          <h2 class="h2">Last Project</h2>
+          <span class="border pl-5 pr-5" style="background-color: #fb6355"></span>
+        </div>
+      </div>
+
+      <div class="row m-5">
+        <div class="col-12">
+          <div class="row">
+            {% for item in lastProject%}
+
+              <div class="col-2 m-auto" onclick="detail({{item.id}})">
+                <div class="card border-0 backHover" style="width: 100% ; height:100%">
+               
+                  <img 
+                    src="/media/{{item.img}}"
+                    class="card-img-top " width="200" height="200"
+                  />
+                  {% comment %}
+                  <div class="card-body">
+                    <p
+                      class="card-text text-capitalize text-center h2"
+                      style="color: #fb6355"
+                    >
+                      {{item.title}}
+                    </p>
+
+                    <p class="card-text text-center">{{item.details}}</p>
+                  </div>
+                  {% endcomment %}
+
+                  <div
+                    class="card-deck p-0 m-0 border-0"
+                    style="height: 10px; background-color: #fb63552c"
+                  >
+                    <div
+                      class="presentageProgress_last progress-bar"
+                      role="progressbar"
+                      style="width: 50%; background-color: #fb6355"
+                      style="background: #fb6355"
+                      aria-valuenow="25"
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                    ></div>
+                  </div>
+
+                  <div class="card-body border-0 bg-dark">
+                    <div class="row">
+                      <div class="col-4 text-center border-right border-light">
+                        <p class="font-weight-bold text-light">Current</p>
+                        <p class="text-light">{{item.actualDonation}} EGP</p>
+                      </div>
+
+                      <p
+                        class="actual_last col-4 h2 text-center align-middle font-weight-bold text-light"
+                        style="font: 20px"
+                      ></p>
+
+                      <div class="col-4 text-center border-left border-light">
+                        <p class="font-weight-bold text-light">Target</p>
+                        <p class="text-light">{{item.totalTarget}} EGP</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+<script>
+              x={{ forloop.counter0 }}
+              console.log(typeof(x))
+              total={{item.totalTarget}}
+              actual={{item.actualDonation}}
+              presentage=(actual/total)*100;
+              document.getElementsByClassName("actual_last")[x].innerText=Math.round(presentage)+"%"
+              document.getElementsByClassName("presentageProgress_last")[x].style.width=presentage+"%"
+
+              function detail(ele)
+              {
+                window.location.href="../home/project/"+ele+"";
+              }
+            </script>
+            {% endfor %} 
+          </div>
+        </div>
+      </div>
+
+    {% endblock %}
+  </body>
+</html>

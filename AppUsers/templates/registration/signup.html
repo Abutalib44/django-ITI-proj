@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% load bootstrap4 %}
+
+
+{% block title %} Signup form {% endblock %}
+
+{% block content %}
+
+  <div style="color: red;">{{error_message}}</div>
+
+  <form method="post" style="width: 500px;" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    <input type="file" name="pic">
+    <input type="submit" value="Sign Up"class="boxed-btn3 w-100" />
+    
+  </form>
+
+
+
+{% endblock %}

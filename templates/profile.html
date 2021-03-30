@@ -1,0 +1,179 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} Profile Page {% endblock %}
+{% block style %}   
+  <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width ,initial-scale=1">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+
+{% endblock %}
+{% block content %} 
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-4 col-md-6 col-sm-12" style="background-color:#f4f9f9;">
+            <div class="row">
+                    <img id="output" src="/media/{{users.profilePic}}" alt="no image found" style="width: 200px;height: 200px;"      
+                    class="mx-auto d-block rounded-circle img-thumbnail my-3" />
+            </div>
+
+            <div class="row">
+                <h1 class="col-sm-12" data-toggle="collapse" data-target="#CONTACT"
+                    style="text-align: center;color: #000;font-weight: bolder;">
+                    User Info</h1>
+                <div class="col-sm-12 collapse" id="CONTACT">
+                    <div class="row">
+                        <form method="POST"  enctype="multipart/form-data" >
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="fname">First Name:</label>
+                                <input type="text" class="form-control" id="fname" name="fname" value="{{user.first_name}}">
+                              </div>
+                              <div class="form-group">
+                                <label for="lname">Last Name:</label>
+                                <input type="text" class="form-control" id="lname" name="lname" value="{{user.last_name}}">
+                              </div>
+                              <div class="form-group">
+                                <label for="phone_number">Phone :</label>
+                                <input type="text" class="form-control" id="phone_number" name="phone_number" value="{{users.phone_number}}">
+                              </div>
+                              <div class="form-group">
+                                <label for="email">email :</label>
+                                <input type="text" class="form-control" id="email" name="email" value="{{user.email}}" readonly>
+                              </div>
+                              <div class="form-group">
+                                <label for="profilePic">image :</label>
+                                <input name="profilePic" id="profilePic" type="file" accept="image/*" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])"   >
+                            </div>
+                            <button type="submit"> Save </button>
+                        </form>
+
+                        <a onclick="location.href='deleteUser/'"> delete my account </a>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <h1 class="col-sm-12"  
+                    style="text-align: center;color:#000;font-weight: bolder;font-size:30px ;">
+                    Optional User Information</h1>
+                <div class="col-sm-12 " >
+                    <div class="row">
+                        <form action="/AppProfile/edit_optionalinfo/" method="POST">
+                            {% csrf_token %}
+                            {% for field in user_opt %}
+                            <div class="form-group">
+                                <label for="{{field.option_info.optionName}}">{{field.option_info.optionName}}:</label>
+                                <input type="text" class="form-control" id="{{field.option_info.optionName}}" name="{{field.option_info.optionName}}" value="{{field.optionValue}}">
+                              </div>
+                            {% endfor %}
+                            <button type="submit"> Save </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <hr>
+        </div>
+
+        <div class="col-lg-8 col-md-6 col-sm-12" style="background-color:#FFF ;">
+        
+            <div class="row">
+                <h3 class="col-sm-12" data-toggle="collapse" data-target="#Education"
+                    style="color:#6B011F;font-weight: bolder;">
+                    Projects</h3>
+                <div class="col-sm-12 collapse" id="Education">
+                    <div class="row">
+                        <div class="col-sm-12 my-1">
+                            <div class="row" style="font-size:larger;font-weight: bold;overflow-wrap: break-word;">
+                                <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                              <tr>
+                                                <th scope="col">id</th>
+                                                <th scope="col">title</th>
+                                                <th scope="col">details</th>
+                                                <th scope="col">totalTarget</th>
+                                                <th scope="col">#</th>
+                                              </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for row in userproject %}
+                                                <tr>
+                                                    <th scope="row">{{row.id}}</th>
+                                                    <td>{{row.title}}</td>
+                                                    <td>{{row.details}}</td>
+                                                    <td>{{row.totalTarget}}</td>
+                                                    <td><button onclick="location.href='../../home/project/{{row.id}}'" >show</button>| <button type="submit"  onclick="location.href='/AppProfile/delete_pro/{{row.id}}'" >Delete</button></td>
+                                                  </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                          </table>
+                                    
+                                  </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+            <div class="row">
+                <h3 class="col-sm-12" data-toggle="collapse" data-target="#Skills"
+                    style="color:#6B011F;font-weight: bolder;">
+                    Donations</h3>
+                <div class="col-sm-12 collapse" id="Skills">
+                    <div class="row">
+                        <div class="col-sm-12 my-1">
+                            <div class="row" style="font-size:larger;font-weight: bold;overflow-wrap: break-word;">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                          <tr>
+                                            <th scope="col">donationTime</th>
+                                            <th scope="col">donationAmount</th>
+                                            <th scope="col">donationNote</th>
+                                            <th scope="col">projectID</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for row in Donationuser %}
+                                            <tr>
+                                                <td>{{row.donationTime}}</td>
+                                                <td>{{row.donationAmount}}</td>
+                                                <td>{{row.donationNote}}</td>
+                                                <td>{{row.projectID.title}}</td>
+                                              </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                      </table>
+                                
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+ {% endblock %}
+{% block javascript %} 
+
+{% endblock %}

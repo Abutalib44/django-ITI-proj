@@ -1,0 +1,167 @@
+{% extends "base.html"%} {% load static%}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{% block title %} Home {% endblock %}</title>
+
+    {% block style %}
+    <style type="text/css">
+      .card-horizontal {
+        display: flex;
+        flex: 1 1 auto;
+      }
+    </style>
+    <link rel="stylesheet" href="{%static 'assets/css/style.css'%}" />
+    {% endblock %}
+  </head>
+
+  <body>
+    {% block searchForm %}
+
+    <form class="form-inline my-2 my-lg-0" action='../../../home/allProject'>
+      <input
+        id="tags"
+        class="form-control mr-sm-2 btnChanged"
+        type="search"
+        placeholder="Search"
+        name="searching"
+      />
+      <button
+        class="btn btn-outline-danger my-2 my-sm-0"
+        type="submit"
+       
+      >
+        Search
+      </button>
+    </form>
+
+    <script>
+      $( function() {
+
+              var availableName = [
+                  {% for item in allProject %}
+                      "{{item.title}}",
+                  {% endfor %}
+              ];
+
+              var availableTags = [
+                  {% for item2 in allTag %}
+                      "{{item2.tagName}}",
+                  {% endfor %}
+              ];
+
+              var searchingItem= availableName.concat(availableTags);
+
+
+              $( "#tags" ).autocomplete({
+                source: searchingItem
+              });
+            } );
+
+      {% comment %} function sendStringToSearch()
+      {
+        var stringTosearch = document.getElementById("tags").value
+        console.log( stringTosearch)
+        if(stringTosearch != '')
+        {
+         
+          window.open("../../../home/allProject/"+stringTosearch );
+
+          //var x = "../../../home/allProject/"
+          
+          //window.location.href= x.concat(stringTosearch);
+        }
+                     
+      } {% endcomment %}
+    </script>
+    {% endblock %} {% block content %}
+
+    
+    <div class="container" style="border: px solid">
+      <div class="row m-5">
+        {% for item in allProject %}
+        <div class="col-md-7 mt-5 h-100" onclick="detail({{item.id}})">
+          <div class="card">
+            <div
+              class="card-horizontal bg-light w-100"
+              style="border: px solid yellow"
+            >
+              <div class="img-square-wrapper w-50" style="border: px solid red">
+                <img
+                  class="card-img-top w-100 rounded float-left"
+                  src="/media/{{item.img}}"   width="200" height="300"
+                  alt=""
+                />
+              </div>
+              <div class="card-body w-50 p-0 m-0" style="position: relative">
+                <h4 class="card-title ml-3 mt-3" style="color: #fb6355">
+                  {{item.title}}
+                </h4>
+                <p class="card-text ml-3">{{item.details}}</p>
+
+                <div
+                  class="bg-dark w-100"
+                  style="position: absolute; bottom: 0%; right: 0%"
+                >
+                  <div
+                    class="card-deck p-0 m-0 border-0"
+                    style="
+                      height: 10px;
+                      width: 100%;
+                      background-color: #fb63552c;
+                    "
+                  >
+                    <div
+                      class="presentageProgress progress-bar"
+                      role="progressbar"
+                      style="width: 50%; background-color: #fb6355"
+                      style="background: #fb6355"
+                      aria-valuenow="25"
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                    ></div>
+                  </div>
+                  <div class="row">
+                    <div class="col-4 text-center border-right border-light">
+                      <p class="font-weight-bold text-light">Current</p>
+                      <p class="text-light">{{item.actualDonation}} EGP</p>
+                    </div>
+
+                    <p
+                      class="actual col-4 h4 text-center align-middle font-weight-bold text-light"
+                      style="font: 20px"
+                    ></p>
+
+                    <div class="col-4 text-center border-left border-light">
+                      <p class="font-weight-bold text-light">Target</p>
+                      <p class="text-light">{{item.totalTarget}} EGP</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <script>
+              x={{ forloop.counter0 }}
+              console.log(typeof(x))
+              total={{item.totalTarget}}
+              actual={{item.actualDonation}}
+              presentage=(actual/total)*100;
+              document.getElementsByClassName("actual")[x].innerText=Math.round(presentage)+"%"
+              document.getElementsByClassName("presentageProgress")[x].style.width=presentage+"%"
+
+              function detail(ele)
+              {
+                window.location.href="../home/project/"+ele+"";
+              }
+            </script>
+          </div>
+        </div>
+        <div class="col-md-1"></div>
+        {% endfor %}
+      </div>
+      <div class=""></div>
+    </div>
+    {% endblock %}
+  </body>
+</html>

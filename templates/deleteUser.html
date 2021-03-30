@@ -1,0 +1,44 @@
+{% extends "base.html"%} {% load static%}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{% block title %} Delete User {% endblock %}</title>
+    {% block style %} {% endblock %}
+  </head>
+
+  <body>
+    {% block content %}
+
+    <div class="container-fluid">
+      <div class="col-8 m-5 bg-light p-5">
+        Are you sure delete your account ?!
+        <form class="mt-3" method="POST">
+          {% csrf_token %}
+          <div class="col">
+            <label for="passIn">Password</label>
+            <input
+              id="passIn"
+              type="password"
+              class="form-control"
+              placeholder="Pass"
+              name="password"
+              required
+            />
+            <div class="invalid-feedback">Please Enter Password</div>
+          </div>
+
+          <input type="submit" class="mt-5" value="Delete" />
+          <input
+            type="button"
+            class="mt-5"
+            onclick="location.href='../'"
+            value="Cancel"
+          />
+        </form>
+        <p>{{msg}}</p>
+      </div>
+    </div>
+
+    {% endblock %}
+  </body>
+</html>
